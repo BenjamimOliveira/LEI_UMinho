@@ -9,7 +9,28 @@ O conceito de multi-lane platooning surge então como uma possível solução pa
     \label{fig:my_label}
 \end{figure}
 
-Multi-lane platooning pode então ser descrito como uma aplicação/evolução do platooning tradicional a um ambiente com múltiplas faixas. Numa implementação a médio prazo devemos também considerar a possibilidade de termos um ambiente composto por veículos mistos, considerando "misto" como sendo a representação da mistura de veículos com habilitações para integrar platoons (em termos de software/hardware) e veículos sem qualquer tipo capacidade para tal.
+Multi-lane platooning pode então ser descrito como uma aplicação/evolução do platooning tradicional a um ambiente com múltiplas faixas, prometendo uma melhoria em termos de area util das estradas, economização de combustivel e consequente redução de emissões, bem como um maior nivel de segurança. Numa implementação a médio prazo devemos também considerar a possibilidade de termos um ambiente composto por veículos mistos, considerando "misto" como sendo a representação da mistura de veículos com habilitações para integrar platoons (em termos de software/hardware) e veículos sem qualquer tipo capacidade para tal.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Platooning Tradicional}  & \textbf{Multi-lane Platooning}         \\ \midrule
+Faz uso de uma só via            & Faz uso de várias vias                 \\ \midrule
+Não otimizado ao espaço útil     & Otimizado ao espaço útil               \\ \midrule
+Mais adequado a veículos pesados & Adequado a veículos ligeiros e pesados \\ \midrule
+Implementação menos complexa     & Implementação mais complexa            \\ \midrule
+Geralmente não necessita de infraestruturas externas & Infraestruturas externas são comumente sugeridas \\ \bottomrule
+\end{tabular}%
+}
+\caption{Platooning vs Multi-lane Platooning}
+\label{tab:my-table}
+\end{table}
+
+
 
 Cada platoon formado, para além da condução autónoma deve assumir alguns comportamentos de grupo de forma a garantir um funcionamento do grupo como um todo. Um platoon, de modo geral, precisa de ser liderado, quer por um elemento do mesmo (uma liderança centralizada no platoon) quer por um sistema de controlo externo (uma liderança descentralizada). Uma liderança descentralizada pode ter um custo inicial maior, considerando que o sistema responsável por coordenar tanto os platoons como os veículos tem que ser desenvolvido, bem como infraestruturas que suportem o mesmo, no entanto, em teoria, confere uma maior escalabilidade.
 
@@ -17,7 +38,7 @@ Para além da questão da liderança os veículos integrantes do pelotão devem 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.05]{Images/placeholder.png}
+    \includegraphics[scale=0.4]{Images/brakeCheck.png}
     \caption{Travagem de emergência}
     \label{fig:my_label}
 \end{figure}
@@ -25,13 +46,16 @@ Para além da questão da liderança os veículos integrantes do pelotão devem 
     Após a travagem iniciada todo os veículos que seguem atrás do veiculo que iniciou a travagem devem também ser capazes de reduzir a velocidade de forma a evitar qualquer tipo de contacto entre eles
 \end{center}
 
-Ainda dentro dos comportamentos sociais dentro dos pelotões temos o processo de Merge e Split, processos pelos quais veículos se juntam e abandonam o pelotão (respectivamente). A forma mais simples de um veículo se juntar a um pelotão consiste em juntar-se ao fundo da fila, no entanto se o mesmo não for possível o veículo deverá ter a possibilidade de entrar noutra zona do pelotão, mediante comunicação com os veículos integrantes. Algumas implementações na literatura [Referências] sugerem que esta manobra pode ser feita de forma não autónoma pelo condutor do veículo, no entanto numa implementação ideal julgamos que o processo deva ser completamente autónomo. O processo de Split é inerentemente mais fácil, consistindo num "abandono" de um pelotão por parte de um veículo. Após a saida do mesmo os veículos que seguiam atrás dele devem reduzir o espaçamento para o veículo seguinte, cobrindo o espaço deixado pelo veículo que abandona a fila.
+Ainda dentro dos comportamentos sociais dentro dos pelotões temos o processo de Merge e Split, processos pelos quais veículos se juntam e abandonam o pelotão (respectivamente). A forma mais simples de um veículo se juntar a um pelotão consiste em juntar-se ao fundo da fila, no entanto se o mesmo não for possível o veículo deverá ter a possibilidade de entrar noutra zona do pelotão, mediante comunicação com os veículos integrantes. Algumas implementações na literatura [Referências] sugerem que esta manobra pode ser feita de forma não autónoma pelo condutor do veículo, no entanto numa implementação ideal julgamos que o processo deva ser completamente autónomo. O processo de Split é inerentemente mais fácil, consistindo num "abandono" de um pelotão por parte de um veículo. Após a saida do mesmo os veículos que seguiam atrás do veículo \textit{Splitter} devem reduzir o espaçamento para o veículo seguinte, cobrindo o espaço deixado pelo veículo que abandona a fila.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.05]{Images/placeholder.png}
+    \includegraphics[scale=0.4]{Images/Merge.png}
+    \includegraphics[scale=0.4]{Images/Split.png}
     \caption{Merge (esquerda) e Split (direita)}
     \label{fig:my_label}
 \end{figure}
 
-[ToDo - Lane changing]
+Num sistema com múltiplas faixas um ponto importante do comportamento de grupo dos pelotões prende-se com a alteração de faixa. Em 2007 Dao, Clark e Huissoon discutiam este assunto, como se pode ler em \cite{cite10,citeE4}.
+
+O processo de decisão responsável por definir que faixa um veículo, ou, no nosso caso, um pelotão deles, vai assumir deve considerar a capacidade máxima de cada faixa, e o quão próximo do limite de veículos cada faixa está. O plano de atribuição de faixas aos veículos presentes na zona em questão deve ser feito tendo em conta todos os veículos (ou pelotões). Este processo de decisão poderá ser feito entre os pelotões (ou entre os seus lideres) no caso de ser um sistema centralizado (veículos/pelotões tomam as suas próprias decisões) ou por um sistema descentralizado responsável por "controlar" os veículos e as suas ações. 
